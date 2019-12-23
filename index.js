@@ -152,7 +152,7 @@ class Agent {
       for (var i = 0; i < foods.length; ++i) {
          var d = this.dist2AgentSq(foods[i]);
          if (d < this.visionRadius * this.visionRadius) {
-            if (d <= (this.size + foods[i].size) * (this.size + foods[i].size)) {
+            if (d <= (this.size + foods[i].size/2) * (this.size + foods[i].size/2)) {
                res[3].push(foods[i].id);
             } else {
                var a = this.currForward;

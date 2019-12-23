@@ -36,6 +36,7 @@ class Agent {
    constructor(options) {
       this.brain = options.brain;
       this.id = options.id;
+      this.gen = options.gen;
       this.x = options.x;
       this.y = options.y;
       this.dir = options.dir;
@@ -254,12 +255,12 @@ var idCount = 0;
 
 var foods = [];
 
-var agentSizeRange = [5, 30];
+var agentSizeRange = [10, 35];
 var speedRange = [1, 5];
-var visionRadiusRange = [50, 200];
+var visionRadiusRange = [50, 300];
 var turnRateRange = [0.05, 0.1];
 
-var foodSizeRange = [5, 15];
+var foodSizeRange = [5, 20];
 
 var hatchQueue = [];
 
@@ -273,9 +274,9 @@ var NNlayers = [9, 6, 3];
 var numAgents = 20;
 var maxAgents = 30;
 var minAgents = 15;
-var numFoods = 20;
+var numFoods = 40;
 var epsilon = 0.3;
-var delta = 0.1;
+var delta = 0.05;
 var foodValueMultiplier = 20;
 var energyLossValueMultiplier = 25;
 
@@ -304,15 +305,21 @@ function draw() {
    }
    for (var i = 0; i < agents.length; ++i) {
       noStroke(2);
+      // strokeWeight(1);
+      // stroke(coolors.ghostwhite);
       fill(coolors.transparentMint);
       ellipse(agents[i].x, agents[i].y, agents[i].visionRadius);
+      // noFill();
+      // for(var j = 1; j<agents[i].gen; j++){
+      //    ellipse(agents[i].x, agents[i].y, agents[i].visionRadius+4*j);
+      // }
       strokeWeight(2);
       if(agents[i].color<myColorArr.length && agents[i].color>=0){
          stroke(myColorArr[agents[i].color]);
       }else{
          stroke(coolors.ghostwhite);
       }
-      noFill();
+      // noFill();
       ellipse(agents[i].x, agents[i].y, agents[i].size);
    }
    noStroke();
@@ -340,6 +347,7 @@ function findAgentByID(id){
 function createRandomAgent(){
    agents.push(new Agent({
       id: idCount,
+      gen: 1,
       x: Math.round(Math.random() * w),
       y: Math.round(Math.random() * h),
       dir: Math.random() * 3.1415,
@@ -377,6 +385,7 @@ function createDescendants(agent, num){
 function createDescendant(agent){
    agents.push(new Agent({
       id: idCount,
+      gen: agent.gen+1,
       x: Math.round(Math.random() * w),
       y: Math.round(Math.random() * h),
       dir: Math.random() * 3.1415,

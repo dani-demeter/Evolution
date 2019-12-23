@@ -152,7 +152,7 @@ class Agent {
       for (var i = 0; i < foods.length; ++i) {
          var d = this.dist2AgentSq(foods[i]);
          if (d < this.visionRadius * this.visionRadius) {
-            if (d <= (this.size + foods[i].size/2) * (this.size + foods[i].size/2)) {
+            if (d <= (this.size/2 + foods[i].size/2) * (this.size/2 + foods[i].size/2)) {
                res[3].push(foods[i].id);
             } else {
                var a = this.currForward;
@@ -184,7 +184,7 @@ class Agent {
       for (var i = 0; i < agents.length; ++i) {
          var d = this.dist2AgentSq(agents[i]);
          if (d < this.visionRadius * this.visionRadius && d != 0) {
-            if (d <= (this.size + agents[i].size) * (this.size + agents[i].size)) { //on another fish
+            if (d <= (this.size/2 + agents[i].size/2) * (this.size/2 + agents[i].size/2)) { //on another fish
                if (agents[i].size > this.size) {
                   res[7].push(agents[i].id); //on bigger fish
                } else {
